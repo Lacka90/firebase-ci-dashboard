@@ -22,13 +22,10 @@ app.post('/', async (req, res) => {
   console.log('body', req.body);
   const { payload } = req.body as { payload: CirclePayload};
 
-  const { user, reponame, status, committer_date } = payload;
+  const { ...params } = payload;
 
   await projects.child(payload.reponame).push().set({
-    user,
-    reponame,
-    status,
-    committer_date,
+    ...params,
   })
 
   return res.sendStatus(201);
