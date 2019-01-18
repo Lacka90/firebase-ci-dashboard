@@ -4,6 +4,11 @@ import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
 import { CirclePayload } from './circle-payload';
 
+admin.initializeApp({
+  credential: admin.credential.applicationDefault(),
+  databaseURL: 'https://ci-dashboard-db276.firebaseio.com'
+});
+
 const db = admin.database();
 const projects = db.ref("projects");
 
