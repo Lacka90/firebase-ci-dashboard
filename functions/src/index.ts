@@ -1,6 +1,11 @@
-import * as functions from 'firebase-functions';
-import * as express from 'express';
 import * as cors from 'cors';
+import * as express from 'express';
+import * as admin from 'firebase-admin';
+import * as functions from 'firebase-functions';
+import { CirclePayload } from './circle-payload';
+
+const db = admin.database();
+const projects = db.ref("projects");
 
 const app = express();
 
@@ -11,9 +16,20 @@ app.use(cors({ origin: true }));
 // app.use(myMiddleware);
 
 // build multiple CRUD interfaces:
-app.post('/', (req, res) => {
+app.post('/', async (req, res) => {
   console.log('body', req.body);
-  res.sendStatus(201);
+  const { payload } = req.body as { payload: CirclePayload};
+
+  const { user, reponame, status, committer_date } = payload;
+
+  await projects.child(payload.reponame).push().set({
+    user,
+    reponame,
+    status,
+    committer_date,
+  })
+
+  return res.sendStatus(201);
 });
 
 // Expose Express API as a single Cloud Function:
