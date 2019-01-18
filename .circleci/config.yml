@@ -13,12 +13,12 @@ jobs:
           command: ls -la
 
       - run:
-          working_directory: ~/firebase-ci-dashboard/functions
+          working_directory: ~/functions
           name: Install Dependencies
           command: npm install
 
       - run:
-          working_directory: ~/firebase-ci-dashboard/functions
+          working_directory: ~/functions
           name: Deploy
           command: ./node_modules/.bin/firebase deploy --only functions --token "$FIREBASE_TOKEN"
 
