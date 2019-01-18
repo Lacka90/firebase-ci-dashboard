@@ -8,10 +8,21 @@ jobs:
       - setup_remote_docker:   # (2)
           docker_layer_caching: true # (3)
 
+      - restore_cache:
+          name: Restore Npm Package Cache
+          keys:
+            - npm-packages-{{ checksum "package-lock.json" }}
+
       - run:
           working_directory: ~/project/functions
           name: Install Dependencies
           command: npm install
+
+      - save_cache:
+          name: Save Npm Package Cache
+          key: npm-packages-{{ checksum "package-lock.json" }}
+          paths:
+            - ~/.cache/npm
 
       - run:
           working_directory: ~/project/functions
