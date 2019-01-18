@@ -9,16 +9,18 @@ jobs:
           docker_layer_caching: true # (3)
 
       - run:
-          name: Debug
-          command: ls -la
+          name: Debug0
+          command: cd .. && ls -la
 
       - run:
-          working_directory: ~/functions
+          name: Debug
+          command: ls -la && cd functions
+
+      - run:
           name: Install Dependencies
           command: npm install
 
       - run:
-          working_directory: ~/functions
           name: Deploy
           command: ./node_modules/.bin/firebase deploy --only functions --token "$FIREBASE_TOKEN"
 
