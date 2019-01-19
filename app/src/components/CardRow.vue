@@ -29,7 +29,7 @@
               </div>
 
               <div class="col-sm-12 date">
-                {{ new Date(build.committer_date) | dateFormat('YYYY-MM-DD HH:mm')}}
+                {{ new Date(build.start_time) | dateFormat('YYYY-MM-DD HH:mm')}} ({{ Math.ceil(build.build_time_millis / 1000) }}s)
               </div>
 
               <div class="avatar">
