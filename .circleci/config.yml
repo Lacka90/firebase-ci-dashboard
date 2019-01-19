@@ -9,10 +9,9 @@ jobs:
           docker_layer_caching: true # (3)
 
       - restore_cache:
-          working_directory: ~/project/functions
           name: Restore Npm Package Cache
           keys:
-            - functions-packages-{{ checksum "package-lock.json" }}
+            - functions-packages-{{ checksum "functions/package-lock.json" }}
 
       - run:
           working_directory: ~/project/functions
@@ -20,9 +19,8 @@ jobs:
           command: npm install
 
       - save_cache:
-          working_directory: ~/project/functions
           name: Save Npm Package Cache
-          key: functions-packages-{{ checksum "package-lock.json" }}
+          key: functions-packages-{{ checksum "functions/package-lock.json" }}
           paths:
             - ~/.cache/npm
 
@@ -32,10 +30,9 @@ jobs:
           command: ./node_modules/.bin/firebase deploy --only functions --token "$FIREBASE_TOKEN"
 
       - restore_cache:
-          working_directory: ~/project/app
           name: Restore Npm Package Cache
           keys:
-            - app-packages-{{ checksum "package-lock.json" }}
+            - app-packages-{{ checksum "app/package-lock.json" }}
 
       - run:
           working_directory: ~/project/app
@@ -43,9 +40,8 @@ jobs:
           command: npm install
 
       - save_cache:
-          working_directory: ~/project/app
           name: Save Npm Package Cache
-          key: app-packages-{{ checksum "package-lock.json" }}
+          key: app-packages-{{ checksum "app/package-lock.json" }}
           paths:
             - ~/.cache/npm
 
