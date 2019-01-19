@@ -48,7 +48,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 export default class CardRow extends Vue {
   @Prop() public project: any;
 
-  public getStatus(build) {
+  public getStatus(build: { status: string }) {
     if (!build) return;
     const {status} = build;
     switch (status) {
