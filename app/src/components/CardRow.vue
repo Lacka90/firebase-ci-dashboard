@@ -17,7 +17,7 @@
               </div>
               <div class="col-sm-12">
                 <h3 class="status">
-                  <a :href="build.build_url">Build {{build.status}}</a>
+                  <a :href="build.build_url">#{{build.build_num}} Build {{build.status}}</a>
                 </h3>
               </div>
               <div class="row">
