@@ -2,7 +2,10 @@
 
 <template>
   <div>
-    <CardRow v-for="project in projects" :project="project" :key="project.id" />
+    <div v-for="project in projects" :key="project.id">
+      <CardRow :project="project" />
+      <hr />
+    </div>
   </div>
 </template>
 
