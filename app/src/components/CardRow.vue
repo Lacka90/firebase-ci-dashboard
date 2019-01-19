@@ -18,23 +18,21 @@
               <div class="col-sm-12">
                 <h3 class="status">
                   <a :href="build.build_url">#{{build.build_num}} Build {{build.status}}</a>
+                  <small>{{ build.subject }}</small>
                 </h3>
               </div>
-              <div class="row">
-                <div class="col-sm-12 name">
-                  <div>Started by {{build.user.name}}</div>
-                </div>
 
-                <div class="col-sm-12 date">
-                  {{ new Date(build.committer_date) | dateFormat('YYYY-MM-DD HH:mm')}}
-                </div>
-
-                <div class="avatar">
-                  <img class="" height="30" :src="build.user.avatar_url" />
-                </div>
+              <div class="col-sm-12 name">
+                <div>Started by {{build.user.name}}</div>
               </div>
-              <!-- <p>on {{build.committer_date}}</p> -->
-              <!-- <p class="doc">{{ build }}</p> -->
+
+              <div class="col-sm-12 date">
+                {{ new Date(build.committer_date) | dateFormat('YYYY-MM-DD HH:mm')}}
+              </div>
+
+              <div class="avatar">
+                <img class="" height="30" :src="build.user.avatar_url" />
+              </div>
             </div>
           </div>
         </div>
@@ -84,6 +82,8 @@ export default class CardRow extends Vue {
   }
   .status {
     display: flex;
+    flex-direction: column;
+    align-items: baseline;
     margin-left: 0;
     margin-right: 0;
   }
