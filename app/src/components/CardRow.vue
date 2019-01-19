@@ -18,7 +18,9 @@
               <div class="col-sm-12">
                 <h3 class="status">
                   <a :href="build.build_url">#{{build.build_num}} Build {{build.status}}</a>
-                  <small>{{ build.subject }}</small>
+                  <div class="subtitle-container">
+                    <small class="subtitle">{{ build.subject }}</small>
+                  </div>
                 </h3>
               </div>
 
@@ -91,6 +93,14 @@ export default class CardRow extends Vue {
     border: 0 !important;
     height: 100%;
     justify-content: center;
+  }
+  .subtitle.container {
+    width: 100%;
+    &.subtitle {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
   }
   .build-card {
     position: relative;
