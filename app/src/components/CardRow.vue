@@ -15,7 +15,7 @@
           <div class="card" v-for="build in project.data" :key="build._key">
             <div class="build-card" :style="{ borderColor: build.status === 'success' ? 'green' : 'red' }">
               <div class="triangle" :style="{ borderRightColor: build.status === 'success' ? 'green' : 'red' }">
-                <i class="fas fa-times"></i>
+                <i class="fas" :class="[build.status === 'success' ? 'fa-check' : 'fa-times']"></i>
               </div>
               <div class="col-sm-12">
                 <h3 class="status">
