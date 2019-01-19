@@ -3,7 +3,7 @@
     <div class="col-sm-12 col-md-3">
       <div class="card fluid title-card">
         <div>
-          <a :href="project.repoUrl">
+          <a :href="project.repoUrl" target="_blank">
             <b>{{ project.name }}</b>
           </a>
         </div>
