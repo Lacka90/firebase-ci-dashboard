@@ -37,7 +37,7 @@ jobs:
       - run:
           working_directory: ~/project
           name: Deploy
-          command: ./node_modules/.bin/firebase deploy --only hosting --token "$FIREBASE_TOKEN"
+          command: ./functions/node_modules/.bin/firebase deploy --only hosting --token "$FIREBASE_TOKEN"
 
 notify:
   webhooks:
