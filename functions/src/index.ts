@@ -24,19 +24,17 @@ app.post('/', async (req, res) => {
 
   const { ...params } = payload;
 
-  // await projects.child(payload.reponame).
-
-  await projects.child(payload.reponame).push().set({
-    ...params,
-  })
-
   await projects.child(payload.reponame).orderByChild('committer_date').once('value', (ss) => {
-    const kk = Object.keys(ss.val()).slice(-4);
+    const kk = Object.keys(ss.val()).slice(-3);
     if (kk.length) {
       return Promise.all([kk.map(k => projects.child(payload.reponame).child(k).remove())]);
     }
     return Promise.resolve();
-  })
+  });
+
+  await projects.child(payload.reponame).push().set({
+    ...params,
+  });
 
   return res.sendStatus(201);
 });
