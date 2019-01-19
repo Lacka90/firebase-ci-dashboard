@@ -26,8 +26,10 @@ app.post('/', async (req, res) => {
 
   await projects.child(payload.reponame).orderByChild('committer_date').once('value', (ss) => {
     const len = Object.keys(ss.val()).length - 3;
+    console.log('len', len);
     if (len > 0) {
       const kk = Object.keys(ss.val()).slice(0, len);
+      console.log('kk', kk);
       if (kk.length > 0) {
         return Promise.all([kk.map(k => projects.child(payload.reponame).child(k).remove())]);
       }
