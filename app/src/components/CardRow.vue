@@ -49,8 +49,11 @@ export default class CardRow extends Vue {
   @Prop() public project: any;
 
   public getStatus(build: { status: string }) {
-    if (!build) return;
-    const {status} = build;
+    if (!build) {
+      return '';
+    }
+
+    const { status } = build;
     switch (status) {
       case 'success':
         return 'green';

@@ -34,10 +34,12 @@ export default class App extends Vue {
     db.ref('projects').on('value', (snapshot) => {
       if (snapshot) {
         const values = snapshot.val();
-        this.projects = Object.keys(values).map(name => ({ name, data: Object.keys(values[name]).map(id => ({ id, ...values[name][id]})).reverse() }));
+        this.projects = Object.keys(values)
+          .map((name) => ({
+            name,
+            data: Object.keys(values[name]).map((id) => ({ id, ...values[name][id]})).reverse(),
+          }));
       }
-    }, (error: any) => {
-      console.log(error);
     });
   }
 }
