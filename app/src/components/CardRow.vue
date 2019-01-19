@@ -11,8 +11,8 @@
       <div class="container">
         <div class="row">
           <div class="card" v-for="build in project.data" :key="build.id">
-            <div class="build-card" :style="{ borderColor: build.status === 'success' ? 'green' : 'red' }">
-              <div class="triangle" :style="{ borderRightColor: build.status === 'success' ? 'green' : 'red' }">
+            <div class="build-card" :style="{ borderColor: getStatus(build.status) }">
+              <div class="triangle" :style="{ borderRightColor: getStatus(build.status) }">
                 <i class="fas" :class="[build.status === 'success' ? 'fa-check' : 'fa-times']"></i>
               </div>
               <div class="col-sm-12">
@@ -47,6 +47,19 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 @Component
 export default class CardRow extends Vue {
   @Prop() public project: any;
+
+  public getStatus(status) {
+    switch (status) {
+      case 'success':
+        return 'green';
+      case 'failed':
+        return 'red';
+      case 'canceled':
+        return 'grey';
+      default:
+        return 'black';
+    }
+  }
 }
 </script>
 
