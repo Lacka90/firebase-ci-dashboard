@@ -24,6 +24,10 @@ app.post('/', async (req, res) => {
 
   const { ...params } = payload;
 
+  await projects.child(payload.reponame).push().set({
+    ...params,
+  });
+
   await projects.child(payload.reponame).orderByChild('committer_date').once('value', (ss) => {
     const len = Object.keys(ss.val()).length - 5;
     console.log('len', len);
@@ -35,10 +39,6 @@ app.post('/', async (req, res) => {
       }
     }
     return Promise.resolve();
-  });
-
-  await projects.child(payload.reponame).push().set({
-    ...params,
   });
 
   return res.sendStatus(201);
