@@ -32,7 +32,7 @@ jobs:
       - run:
           working_directory: ~/project/app
           name: Install app deps
-          command: npm install"
+          command: npm install
 
       - run:
           working_directory: ~/project
