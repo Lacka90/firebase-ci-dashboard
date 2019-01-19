@@ -3,7 +3,9 @@
     <div class="col-sm-12 col-md-3">
       <div class="card fluid title-card">
         <div>
-          <b>{{ project.name }}</b>
+          <a :href="project.repoUrl">
+            <b>{{ project.name }}</b>
+          </a>
         </div>
       </div>
     </div>

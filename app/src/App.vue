@@ -37,6 +37,7 @@ export default class App extends Vue {
         this.projects = Object.keys(values)
           .map((name) => ({
             name,
+            repoUrl: values[name][Object.keys(values[name])[0]]['vcs_url'],
             data: Object.keys(values[name]).map((id) => ({ id, ...values[name][id]})).reverse(),
           }));
       }
