@@ -29,7 +29,7 @@ app.post('/', async (req, res) => {
   });
 
   await projects.child(payload.reponame).orderByChild('committer_date').once('value', (ss) => {
-    const len = Object.keys(ss.val()).length - 5;
+    const len = Object.keys(ss.val()).length - 6;
     console.log('len', len);
     if (len > 0) {
       const kk = Object.keys(ss.val()).slice(0, len);
