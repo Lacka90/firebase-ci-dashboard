@@ -4,3 +4,8 @@ declare module '*.vue' {
 }
 
 declare module 'vue-filter-date-format';
+
+declare module '!val-loader!*' {
+  const contents: any;
+  export = contents;
+}

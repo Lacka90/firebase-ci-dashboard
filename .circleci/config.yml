@@ -29,6 +29,16 @@ jobs:
           name: Deploy
           command: ./node_modules/.bin/firebase deploy --only functions --token "$FIREBASE_TOKEN"
 
+      - run:
+          working_directory: ~/project/app
+          name: Install app deps
+          command: npm install"
+
+      - run:
+          working_directory: ~/project
+          name: Deploy
+          command: ./node_modules/.bin/firebase deploy --only hosting --token "$FIREBASE_TOKEN"
+
 notify:
   webhooks:
     - url: https://us-central1-ci-dashboard-db276.cloudfunctions.net/dashboard/
