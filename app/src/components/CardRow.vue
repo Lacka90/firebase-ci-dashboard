@@ -102,7 +102,11 @@ export default class CardRow extends Vue {
       overflow: hidden;
     }
   }
+  .card {
+    align-self: stretch;
+  }
   .build-card {
+    height: 100%;
     position: relative;
     padding: 15px;
     border-width: 2px !important;
