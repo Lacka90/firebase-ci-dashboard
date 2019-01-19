@@ -5,7 +5,7 @@ import VueFilterDateFormat from 'vue-filter-date-format';
 
 Vue.config.productionTip = false;
 
-Vue.use(VueFilterDateFormat)
+Vue.use(VueFilterDateFormat);
 
 new Vue({
   store,

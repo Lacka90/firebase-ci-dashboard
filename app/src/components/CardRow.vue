@@ -1,5 +1,3 @@
-
-
 <template>
   <div class="row">
     <div class="col-sm-12 col-md-3">
@@ -12,7 +10,7 @@
     <div class="col-sm-12 col-md-9">
       <div class="container">
         <div class="row">
-          <div class="card" v-for="build in project.data" :key="build._key">
+          <div class="card" v-for="build in project.data" :key="build.id">
             <div class="build-card" :style="{ borderColor: build.status === 'success' ? 'green' : 'red' }">
               <div class="triangle" :style="{ borderRightColor: build.status === 'success' ? 'green' : 'red' }">
                 <i class="fas" :class="[build.status === 'success' ? 'fa-check' : 'fa-times']"></i>

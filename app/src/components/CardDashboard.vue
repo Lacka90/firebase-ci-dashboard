@@ -2,7 +2,7 @@
 
 <template>
   <div>
-    <CardRow v-for="project in projects" :project="project" :key="project._key" />
+    <CardRow v-for="project in projects" :project="project" :key="project.id" />
   </div>
 </template>
 
@@ -11,7 +11,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 import CardRow from './CardRow.vue';
 
 @Component({
-  components: {CardRow}
+  components: { CardRow },
   })
 export default class CardDashboard extends Vue {
   @Prop() public projects: any;
