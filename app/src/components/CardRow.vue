@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="row" v-if="project">
     <div class="col-sm-12 col-md-3">
       <div class="card fluid title-card">
         <div>
@@ -46,28 +46,27 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
-import { DashboardData } from "../../../functions/src/interfaces/dashboard-data";
+import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component
 export default class CardRow extends Vue {
-  @Prop() public project: DashboardData;
+  @Prop() public project!: any;
 
-  public getStatus(build: DashboardData) {
+  public getStatus(build: any) {
     if (!build) {
-      return "";
+      return '';
     }
 
     const { buildStatus } = build;
     switch (buildStatus) {
-      case "success":
-        return "green";
-      case "failed":
-        return "red";
-      case "cancelled":
-        return "grey";
+      case 'success':
+        return 'green';
+      case 'failed':
+        return 'red';
+      case 'cancelled':
+        return 'grey';
       default:
-        return "black";
+        return 'black';
     }
   }
 }
