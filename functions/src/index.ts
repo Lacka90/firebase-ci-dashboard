@@ -57,7 +57,7 @@ app.post('/', async (req, res) => {
           return Promise.all([
             kk.map(k =>
               projects
-                .child(data!.project)
+                .child(data.project)
                 .child(k)
                 .remove(),
             ),
