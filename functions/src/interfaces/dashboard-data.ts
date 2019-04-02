@@ -1,8 +1,8 @@
 export enum Statuses {
-  SUCCESS = "success",
-  FAILED = "failed",
-  CANCELLED = "cancelled",
-  UNKNOWN = "unknown"
+  SUCCESS = 'success',
+  FAILED = 'failed',
+  CANCELLED = 'cancelled',
+  UNKNOWN = 'unknown',
 }
 
 export interface DashboardData {
