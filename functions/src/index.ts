@@ -1,21 +1,23 @@
-import * as cors from "cors";
-import * as express from "express";
-import * as admin from "firebase-admin";
-import * as functions from "firebase-functions";
-import { getCiType, CIType } from "./helper";
-import { parseCircle } from "./parsers/circle-parser";
-import { DashboardData } from "./interfaces/dashboard-data";
-import { parseGitlab } from "./parsers/gitlab-parser";
+import * as cors from 'cors';
+import * as express from 'express';
+import * as admin from 'firebase-admin';
+import * as functions from 'firebase-functions';
+import { getCiType, CIType } from './helper';
+import { parseCircle } from './parsers/circle-parser';
+import { DashboardData } from './interfaces/dashboard-data';
+import { parseGitlab } from './parsers/gitlab-parser';
 
 admin.initializeApp();
 
 const db = admin.database();
-const projects = db.ref("projects");
+const projects = db.ref('projects');
 
 const app = express();
 app.use(cors({ origin: true }));
-app.post("/", async (req, res) => {
+app.post('/', async (req, res) => {
+  console.log('bb', req.body);
   const type = getCiType(req.body);
+  console.log('type', type);
   let data: DashboardData | null = null;
   switch (type) {
     case CIType.CIRCLE_CI: {
@@ -26,8 +28,10 @@ app.post("/", async (req, res) => {
     }
   }
 
+  console.log('data', data);
+
   if (!data) {
-    console.log("body", req.body);
+    console.log('body', req.body);
     return res.sendStatus(500);
   }
 
@@ -35,13 +39,13 @@ app.post("/", async (req, res) => {
     .child(data.project)
     .push()
     .set({
-      ...data
+      ...data,
     });
 
   await projects
     .child(data.project)
-    .orderByChild("startedAt")
-    .once("value", ss => {
+    .orderByChild('startedAt')
+    .once('value', ss => {
       const len = Object.keys(ss.val()).length - 6;
       if (len > 0) {
         const kk = Object.keys(ss.val()).slice(0, len);
@@ -51,8 +55,8 @@ app.post("/", async (req, res) => {
               projects
                 .child(data!.project)
                 .child(k)
-                .remove()
-            )
+                .remove(),
+            ),
           ]);
         }
       }
