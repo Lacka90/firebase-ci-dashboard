@@ -96,8 +96,9 @@ export default class CardRow extends Vue {
   height: 100%;
   justify-content: center;
 }
-.subtitle.container {
+.subtitle-container {
   width: 100%;
+  text-align: left;
   &.subtitle {
     white-space: nowrap;
     text-overflow: ellipsis;
