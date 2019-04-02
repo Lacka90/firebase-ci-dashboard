@@ -1,8 +1,11 @@
-import * as cors from 'cors';
-import * as express from 'express';
-import * as admin from 'firebase-admin';
-import * as functions from 'firebase-functions';
-import { CirclePayload } from './circle-payload';
+import * as cors from "cors";
+import * as express from "express";
+import * as admin from "firebase-admin";
+import * as functions from "firebase-functions";
+import { getCiType, CIType } from "./helper";
+import { parseCircle } from "./parsers/circle-parser";
+import { DashboardData } from "./interfaces/dashboard-data";
+import { parseGitlab } from "./parsers/gitlab-parser";
 
 admin.initializeApp();
 
@@ -10,39 +13,53 @@ const db = admin.database();
 const projects = db.ref("projects");
 
 const app = express();
-
-// Automatically allow cross-origin requests
 app.use(cors({ origin: true }));
-
-// Add middleware to authenticate requests
-// app.use(myMiddleware);
-
-// build multiple CRUD interfaces:
-app.post('/', async (req, res) => {
-  console.log('body', req.body);
-  const { payload } = req.body as { payload: CirclePayload};
-
-  const { ...params } = payload;
-
-  await projects.child(payload.reponame).push().set({
-    ...params,
-  });
-
-  await projects.child(payload.reponame).orderByChild('committer_date').once('value', (ss) => {
-    const len = Object.keys(ss.val()).length - 6;
-    console.log('len', len);
-    if (len > 0) {
-      const kk = Object.keys(ss.val()).slice(0, len);
-      console.log('kk', kk);
-      if (kk.length > 0) {
-        return Promise.all([kk.map(k => projects.child(payload.reponame).child(k).remove())]);
-      }
+app.post("/", async (req, res) => {
+  const type = getCiType(req.body);
+  let data: DashboardData | null = null;
+  switch (type) {
+    case CIType.CIRCLE_CI: {
+      data = parseCircle(req.body);
     }
-    return Promise.resolve();
-  });
+    case CIType.GITLAB_CI: {
+      data = parseGitlab(req.body);
+    }
+  }
+
+  if (!data) {
+    console.log("body", req.body);
+    return res.sendStatus(500);
+  }
+
+  await projects
+    .child(data.project)
+    .push()
+    .set({
+      ...data
+    });
+
+  await projects
+    .child(data.project)
+    .orderByChild("startedAt")
+    .once("value", ss => {
+      const len = Object.keys(ss.val()).length - 6;
+      if (len > 0) {
+        const kk = Object.keys(ss.val()).slice(0, len);
+        if (kk.length > 0) {
+          return Promise.all([
+            kk.map(k =>
+              projects
+                .child(data!.project)
+                .child(k)
+                .remove()
+            )
+          ]);
+        }
+      }
+      return Promise.resolve();
+    });
 
   return res.sendStatus(201);
 });
 
-// Expose Express API as a single Cloud Function:
 exports.dashboard = functions.https.onRequest(app);
