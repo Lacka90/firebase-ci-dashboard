@@ -12,21 +12,25 @@ admin.initializeApp();
 const db = admin.database();
 const projects = db.ref('projects');
 
+function getData(body: any, type?: CIType) {
+  switch (type) {
+    case CIType.CIRCLE_CI: {
+      return parseCircle(body);
+    }
+    case CIType.GITLAB_CI: {
+      return parseGitlab(body);
+    }
+  }
+  return null;
+}
+
 const app = express();
 app.use(cors({ origin: true }));
 app.post('/', async (req, res) => {
   console.log('bb', req.body);
   const type = getCiType(req.body);
   console.log('type', type);
-  let data: DashboardData | null = null;
-  switch (type) {
-    case CIType.CIRCLE_CI: {
-      data = parseCircle(req.body);
-    }
-    case CIType.GITLAB_CI: {
-      data = parseGitlab(req.body);
-    }
-  }
+  const data: DashboardData | null = getData(req.body, type);
 
   console.log('data', data);
 
